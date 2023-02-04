@@ -69,10 +69,11 @@ public class CardController {
     //send APDU commands. the method accept an array of APDU bytes and prints the result
     public void sendAPDU(byte [] c1){
         //establish a communication channel
+        try{
         CardChannel channel = card.getBasicChannel();
                                 
         //send the APDU command and display the response.
-         try{      
+               
         ResponseAPDU r = channel.transmit(new CommandAPDU(c1));
         System.out.println("response: " + r.toString());
         
@@ -80,6 +81,9 @@ public class CardController {
         
          }catch(CardException ce2){
              System.out.println(ce2);
+         
+         }catch(Exception npe){
+             System.out.println("Please check card connection");
          }
     
     
@@ -87,6 +91,7 @@ public class CardController {
     // disconnect the card. use this after every operation. should be private
     private void disconnectCard() throws CardException{
         // Disconnect
+        
         card.disconnect(false);
         System.out.println("Card Disconnected");
     }
