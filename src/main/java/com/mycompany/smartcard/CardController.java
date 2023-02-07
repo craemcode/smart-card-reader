@@ -5,6 +5,7 @@
 package com.mycompany.smartcard;
 
 //imports
+import java.util.HexFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ import javax.smartcardio.CardTerminal;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
 import javax.smartcardio.TerminalFactory;
+
 
 /**
  *
@@ -76,6 +78,9 @@ public class CardController {
                
         ResponseAPDU r = channel.transmit(new CommandAPDU(c1));
         System.out.println("response: " + r.toString());
+        byte[] data = r.getData();
+        String hex = HexFormat.of().formatHex(data);
+        System.out.println(hex);
         
         disconnectCard();
         
